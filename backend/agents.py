@@ -11,12 +11,9 @@ from langchain.prompts import PromptTemplate
 # Note: LangChain Groq integration removed due to import issues
 # Using direct Groq client instead
 
-# Load environment variables from .env file
-from dotenv import load_dotenv
-load_dotenv()
-
 from .tools import get_tools
 from .memory import get_memory_manager, get_agent_context
+from .config import get_config, get_groq_api_key, get_groq_model, get_max_tokens, get_temperature
 
 
 class GroqLLM:
@@ -25,17 +22,17 @@ class GroqLLM:
     """
     
     def __init__(self, model_name: str = None, api_key: str = None):
-        # Get model from environment or use available models
-        self.model_name = model_name or os.getenv("GROQ_MODEL", "llama3-8b-8192")
+        # Get model from configuration or use provided value
+        self.model_name = model_name or get_groq_model()
         
-        # Check if the model from .env is a custom one
+        # Check if the model from config is a custom one
         if "openai/gpt" in str(self.model_name):
             # If using OpenAI-style model name, try it first
             print(f"Attempting to use custom model: {self.model_name}")
-        self.api_key = api_key or os.getenv("GROQ_API_KEY")
+        self.api_key = api_key or get_groq_api_key()
         
         if not self.api_key:
-            raise ValueError("GROQ_API_KEY not found in environment variables. Please set your API key in .env file.")
+            raise ValueError("Groq API key not found in configuration. Please set 'groq_api_key' in the [api] section of config.toml")
             
         self.client = Groq(api_key=self.api_key)
         self.use_real_api = True
@@ -59,8 +56,8 @@ class GroqLLM:
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.7,
-                max_tokens=32768,  # Maximum tokens for most Groq models
+                temperature=get_temperature(),
+                max_tokens=get_max_tokens(),
                 stream=False
             )
             
@@ -118,7 +115,7 @@ class BaseAgent:
     def __init__(self, name: str, role: str, model_name: str = None):
         self.name = name
         self.role = role
-        self.llm = GroqLLM(model_name=model_name)  # This will read from .env file
+        self.llm = GroqLLM(model_name=model_name)  # This will read from config.toml
         self.memory_manager = get_memory_manager()
         self.tools = get_tools()
     

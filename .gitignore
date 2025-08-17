@@ -1,12 +1,17 @@
 # Multi-Agent Workout System .gitignore
 
-# Environment Variables (CRITICAL - Never commit API keys!)
+# Configuration Files with Secrets (CRITICAL - Never commit API keys!)
 .env
 .env.local
 .env.production
 .env.staging
 .env.test
 *.env
+config.toml
+config_*.toml
+secrets.toml
+local_config.toml
+production_config.toml
 
 # API Keys and Secrets
 secrets/
@@ -179,6 +184,8 @@ workout_logs/
 config.json
 settings.json
 user_config.json
+*.toml
+config/
 
 # Backup files
 *.bak

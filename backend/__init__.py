@@ -7,6 +7,7 @@ from .agents import get_agent, get_all_agents
 from .tools import get_tools, get_tool_descriptions
 from .memory import get_memory_manager, reset_memory, get_agent_context
 from .graph import run_multi_agent_workflow, get_workflow_status, reset_workflow
+from .config import get_config, reload_config
 
 __all__ = [
     'get_agent',
@@ -18,5 +19,7 @@ __all__ = [
     'get_agent_context',
     'run_multi_agent_workflow',
     'get_workflow_status',
-    'reset_workflow'
+    'reset_workflow',
+    'get_config',
+    'reload_config'
 ]

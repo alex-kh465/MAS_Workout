@@ -9,21 +9,25 @@ import os
 from datetime import datetime
 from typing import Dict, List, Any
 
-# Load environment variables
-from dotenv import load_dotenv
-load_dotenv()
+# Load configuration from TOML
+sys.path.append(os.path.dirname(__file__))
+from backend.config import get_config
 
 # Add the backend to the Python path
 sys.path.append(os.path.dirname(__file__))
 
 from backend.main import process_user_query, reset_system, get_system_info
 
+# Load configuration
+config = get_config()
+streamlit_config = config.get_section('streamlit')
+
 # Page configuration
 st.set_page_config(
-    page_title="Multi-Agent Workout System",
-    page_icon="💪",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title=streamlit_config.get('page_title', "Multi-Agent Workout System"),
+    page_icon=streamlit_config.get('page_icon', "💪"),
+    layout=streamlit_config.get('layout', "wide"),
+    initial_sidebar_state=streamlit_config.get('initial_sidebar_state', "expanded")
 )
 
 # Custom CSS for better styling
