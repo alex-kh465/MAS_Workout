@@ -1,0 +1,267 @@
+# Multi-Agent Workout System .gitignore
+
+# Environment Variables (CRITICAL - Never commit API keys!)
+.env
+.env.local
+.env.production
+.env.staging
+.env.test
+*.env
+
+# API Keys and Secrets
+secrets/
+config/secrets.py
+api_keys.txt
+*.key
+*.secret
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+workout_agent_env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+.ENV/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Streamlit
+.streamlit/
+streamlit_cache/
+
+# Logs
+logs/
+*.log
+debug.log
+error.log
+agent_logs/
+system_logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+database/
+db/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Windows
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Memory dumps and crash reports
+*.dmp
+*.crash
+crash_reports/
+
+# Agent-specific temporary files
+agent_memory/
+agent_cache/
+memory_dumps/
+
+# Model cache and downloads
+models/
+model_cache/
+*.model
+*.pkl
+*.pickle
+
+# Data files (if sensitive)
+data/sensitive/
+user_data/
+personal_data/
+workout_logs/
+
+# Configuration files with sensitive data
+config.json
+settings.json
+user_config.json
+
+# Backup files
+*.bak
+*.backup
+backup/
+backups/
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Package files
+*.deb
+*.rpm
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Node.js (if you add any JavaScript tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local development files
+local_test.py
+test_script.py
+debug_*.py
+experimental/
+playground/
+
+# System monitoring and profiling
+.prof
+*.prof
+profiling_results/
+
+# Session data
+sessions/
+session_*.json
+
+# Custom application data
+user_sessions/
+conversation_history/
+agent_conversations/
+
+# IDE and editor files
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+
+# Certificates and security
+*.pem
+*.crt
+*.key
+certificates/
+
+# Application specific
+streamlit_app_data/
+multi_agent_logs/
+workflow_cache/
+
+# Testing artifacts
+test_outputs/
+test_results/
+.pytest_cache/
+.coverage
+
+# Performance and monitoring
+performance_logs/
+metrics/
+monitoring/
+
+# Custom exclusions for this project
+# Add any project-specific files you want to ignore here
