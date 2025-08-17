@@ -113,8 +113,10 @@ dmypy.json
 .pytype/
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
+.streamlit/secrets/
 streamlit_cache/
+# Allow .streamlit/config.toml for deployment settings
 
 # Logs
 logs/

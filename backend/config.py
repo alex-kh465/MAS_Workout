@@ -7,11 +7,16 @@ import os
 import toml
 from typing import Dict, Any, Optional
 from pathlib import Path
+try:
+    import streamlit as st
+    STREAMLIT_AVAILABLE = True
+except ImportError:
+    STREAMLIT_AVAILABLE = False
 
 
 class Config:
     """
-    Configuration manager that loads settings from TOML file.
+    Configuration manager that loads settings from TOML file or Streamlit secrets.
     """
     
     def __init__(self, config_file: str = "config.toml"):
@@ -22,8 +27,95 @@ class Config:
             config_file (str): Path to the TOML configuration file
         """
         self.config_file = config_file
-        self.config_path = self._find_config_file()
-        self._config_data = self._load_config()
+        self.is_streamlit_cloud = self._detect_streamlit_cloud()
+        
+        if self.is_streamlit_cloud:
+            print("INFO: Running on Streamlit Cloud, using secrets configuration")
+            self._config_data = self._load_streamlit_secrets()
+        else:
+            print("INFO: Running locally, using TOML configuration")
+            self.config_path = self._find_config_file()
+            self._config_data = self._load_config()
+    
+    def _detect_streamlit_cloud(self) -> bool:
+        """
+        Detect if running on Streamlit Cloud.
+        
+        Returns:
+            bool: True if running on Streamlit Cloud
+        """
+        # Check for Streamlit Cloud environment indicators
+        cloud_indicators = [
+            os.getenv('STREAMLIT_SHARING_MODE') == 'true',
+            os.getenv('STREAMLIT_CLOUD') == 'true',
+            'streamlit.io' in os.getenv('STREAMLIT_SERVER_ADDRESS', ''),
+            STREAMLIT_AVAILABLE and hasattr(st, 'secrets')
+        ]
+        
+        return any(cloud_indicators)
+    
+    def _load_streamlit_secrets(self) -> Dict[str, Any]:
+        """
+        Load configuration from Streamlit secrets.
+        
+        Returns:
+            Dict[str, Any]: Configuration data from Streamlit secrets
+        """
+        if not STREAMLIT_AVAILABLE:
+            raise RuntimeError("Streamlit is not available but trying to load secrets")
+        
+        try:
+            # Convert Streamlit secrets to our config format
+            config_data = {
+                'api': {
+                    'groq_api_key': st.secrets.get('api', {}).get('groq_api_key', ''),
+                    'groq_model': st.secrets.get('api', {}).get('groq_model', 'llama3-8b-8192')
+                },
+                'agents': {
+                    'max_tokens': st.secrets.get('agents', {}).get('max_tokens', 32768),
+                    'temperature': st.secrets.get('agents', {}).get('temperature', 0.7),
+                    'max_iterations': st.secrets.get('agents', {}).get('max_iterations', 10)
+                },
+                'planner': {
+                    'max_response_words': 300,
+                    'role': 'Task Planner and Coordinator'
+                },
+                'research': {
+                    'role': 'Information Researcher',
+                    'enable_calculator': True,
+                    'enable_fitness_research': True,
+                    'enable_web_search': True
+                },
+                'writer': {
+                    'role': 'Content Writer and Response Generator',
+                    'tone': 'friendly and professional'
+                },
+                'memory': {
+                    'max_token_limit': 2000,
+                    'max_conversation_history': 50
+                },
+                'streamlit': {
+                    'page_title': 'Multi-Agent Workout System',
+                    'page_icon': '💪',
+                    'layout': 'wide',
+                    'initial_sidebar_state': 'expanded'
+                },
+                'system': {
+                    'debug': st.secrets.get('system', {}).get('debug', False),
+                    'log_level': st.secrets.get('system', {}).get('log_level', 'INFO'),
+                    'session_timeout': 3600
+                },
+                'tools': {
+                    'calculator_enabled': True,
+                    'web_search_enabled': True,
+                    'fitness_research_enabled': True
+                }
+            }
+            
+            return config_data
+            
+        except Exception as e:
+            raise RuntimeError(f"Error loading Streamlit secrets: {str(e)}")
     
     def _find_config_file(self) -> Path:
         """
@@ -113,9 +205,12 @@ class Config:
     
     def reload(self):
         """
-        Reload configuration from file.
+        Reload configuration from file or secrets.
         """
-        self._config_data = self._load_config()
+        if self.is_streamlit_cloud:
+            self._config_data = self._load_streamlit_secrets()
+        else:
+            self._config_data = self._load_config()
     
     def get_all(self) -> Dict[str, Any]:
         """
@@ -133,9 +228,14 @@ class Config:
         """Get Groq API key."""
         api_key = self.get('api', 'groq_api_key')
         if not api_key or api_key == 'your_groq_api_key_here':
-            raise ValueError(
-                "Groq API key not configured. Please set 'groq_api_key' in the [api] section of config.toml"
-            )
+            if self.is_streamlit_cloud:
+                raise ValueError(
+                    "Groq API key not configured. Please set 'groq_api_key' in Streamlit Cloud secrets."
+                )
+            else:
+                raise ValueError(
+                    "Groq API key not configured. Please set 'groq_api_key' in the [api] section of config.toml"
+                )
         return api_key
     
     @property
