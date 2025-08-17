@@ -1,0 +1,40 @@
+[global]
+# Streamlit Cloud Configuration
+
+# Development mode
+developmentMode = false
+
+# Show warning when running in development mode
+showWarningOnDirectExecution = false
+
+# Disable usage stats
+gatherUsageStats = false
+
+[server]
+# Server configuration for cloud deployment
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+# Memory and performance settings
+maxUploadSize = 200
+maxMessageSize = 200
+
+[browser]
+# Browser settings
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+
+[theme]
+# Theme configuration
+base = "light"
+primaryColor = "#1E88E5"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F8FF"
+textColor = "#000000"
+
+[client]
+# Client settings
+caching = true
+displayEnabled = true
+showErrorDetails = true

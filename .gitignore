@@ -112,11 +112,12 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-# Streamlit
+# Streamlit (Allow config.toml for deployment, protect secrets.toml)
 .streamlit/secrets.toml
 .streamlit/secrets/
+.streamlit/credentials.toml
 streamlit_cache/
-# Allow .streamlit/config.toml for deployment settings
+!.streamlit/config.toml
 
 # Logs
 logs/
@@ -186,8 +187,11 @@ workout_logs/
 config.json
 settings.json
 user_config.json
-*.toml
 config/
+# Protect all TOML files except specific allowed ones
+*.toml
+!config.sample.toml
+!.streamlit/config.toml
 
 # Backup files
 *.bak
@@ -271,6 +275,11 @@ test_results/
 performance_logs/
 metrics/
 monitoring/
+
+# Deployment and Testing Files (Allow these)
+!test_config.py
+!packages.txt
+!DEPLOYMENT.md
 
 # Custom exclusions for this project
 # Add any project-specific files you want to ignore here

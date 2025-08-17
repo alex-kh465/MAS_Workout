@@ -1,0 +1,58 @@
+# Multi-Agent Workout System Configuration Template
+# Copy this file to 'config.toml' and update with your API credentials
+
+[api]
+# Groq API Configuration
+groq_api_key = "your_groq_api_key_here"
+groq_model = "llama3-8b-8192"
+# Alternative models you can use:
+# groq_model = "mixtral-8x7b-32768"
+# groq_model = "gemma-7b-it"
+# groq_model = "openai/gpt-oss-120b"
+
+[agents]
+# Agent Configuration
+max_tokens = 32768
+temperature = 0.7
+max_iterations = 10
+
+[planner]
+# Planner Agent Settings
+max_response_words = 300
+role = "Task Planner and Coordinator"
+
+[research]
+# Research Agent Settings
+role = "Information Researcher"
+enable_calculator = true
+enable_fitness_research = true
+enable_web_search = true
+
+[writer]
+# Writer Agent Settings
+role = "Content Writer and Response Generator"
+tone = "friendly and professional"
+
+[memory]
+# Memory Management Settings
+max_token_limit = 2000
+max_conversation_history = 50
+
+[streamlit]
+# Streamlit App Configuration
+page_title = "Multi-Agent Workout System"
+page_icon = "💪"
+layout = "wide"
+initial_sidebar_state = "expanded"
+
+[system]
+# System Settings
+debug = false
+log_level = "INFO"
+session_timeout = 3600  # seconds
+
+[tools]
+# Tool Configuration
+calculator_enabled = true
+web_search_enabled = true
+fitness_research_enabled = true
