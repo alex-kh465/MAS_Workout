@@ -7,8 +7,6 @@ developmentMode = false
 # Show warning when running in development mode
 showWarningOnDirectExecution = false
 
-# Disable usage stats
-gatherUsageStats = false
 
 [server]
 # Server configuration for cloud deployment
@@ -33,8 +31,3 @@ backgroundColor = "#FFFFFF"
 secondaryBackgroundColor = "#F0F8FF"
 textColor = "#000000"
 
-[client]
-# Client settings
-caching = true
-displayEnabled = true
-showErrorDetails = true
