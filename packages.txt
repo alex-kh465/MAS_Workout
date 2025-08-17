@@ -1,8 +1,0 @@
-# System packages for Streamlit Cloud deployment
-# This file lists system-level packages that need to be installed
-# Most Python-only applications don't need this file
-
-# Uncomment if you need specific system packages:
-# build-essential
-# curl
-# wget
