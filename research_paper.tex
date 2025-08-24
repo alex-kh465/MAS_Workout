@@ -114,9 +114,12 @@ Recent research has emphasized the need for baseline comparisons to demonstrate 
 
 Our Multi-Agent Workout System employs a three-agent architecture designed to address the key challenges in fitness guidance applications.
 
-\diagramplaceholder{System Architecture Overview}{architecture}
-
-This diagram illustrates the three-agent architecture (Planner, Research, and Writer agents), their interactions, and integration with external tools and user interface components. The workflow shows how user queries are processed through the system, with data flowing between specialized agents and external resources.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{diagrams/system_architecture.png}
+\caption{System Architecture Overview}
+\label{fig:architecture}
+\end{figure}
 
 \subsubsection{Agent Specialization}
 
@@ -141,9 +144,12 @@ Our implementation leverages several key technologies:
 
 The coordination protocol ensures systematic information flow between agents while maintaining modularity and extensibility. 
 
-\diagramplaceholder{Agent Coordination Workflow}{workflow}
-
-This diagram shows the sequential and iterative coordination process between agents, highlighting message passing, state transitions, and decision points. It visualizes how information flows from query analysis to final response generation.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{diagrams/coordination_workflow.png}
+\caption{Agent Coordination Workflow}
+\label{fig:workflow}
+\end{figure}
 
 The workflow follows a sequential pattern:
 
@@ -167,9 +173,12 @@ The Research Agent coordinates three specialized tools:
 
 \subsection{Evaluation Framework}
 
-\diagramplaceholder{Evaluation Framework Overview}{evaluation_framework}
-
-This diagram illustrates the comprehensive evaluation process, showing how the multi-agent and baseline systems are tested in parallel, metrics are calculated, and comparative analysis is performed. It highlights the data flow from test queries through evaluation components to final reports.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{diagrams/evaluation_framework.png}
+\caption{Evaluation Framework Overview}
+\label{fig:evaluation_framework}
+\end{figure}
 
 \subsubsection{Response Quality Metrics}
 
@@ -234,9 +243,12 @@ Each query includes expected response characteristics, required keywords, and op
 
 \section{Implementation}
 
-\diagramplaceholder{Technical Implementation Architecture}{implementation_architecture}
-
-This diagram illustrates the technical implementation details, showing system components, libraries, APIs, and their interactions. It provides a comprehensive view of the technology stack and how components are integrated.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{diagrams/technical_implementation.png}
+\caption{Technical Implementation Architecture}
+\label{fig:implementation_architecture}
+\end{figure}
 
 \subsection{Agent Implementation Details}
 
@@ -302,9 +314,7 @@ We conducted comprehensive evaluation using our standardized test dataset across
 
 Table~\ref{tab:quality_metrics} presents the response quality comparison between our multi-agent system and the single-agent baseline.
 
-\diagramplaceholder{Response Quality Comparison Chart}{quality_chart}
-
-This chart visualizes the comparative performance of multi-agent and baseline systems across all response quality metrics. The bar chart format highlights the significant improvements in completeness and actionability scores.
+% Quality comparison chart excluded as requested
 
 \begin{table}[htbp]
 \caption{Response Quality Metrics Comparison}
@@ -374,9 +384,12 @@ While the multi-agent system requires additional processing time due to coordina
 
 \subsection{Individual Agent Performance Analysis}
 
-\diagramplaceholder{Individual Agent Performance Metrics}{agent_performance}
-
-This diagram shows detailed performance metrics for each specialized agent, visualizing their contribution to overall system performance. The radar chart format illustrates the balanced performance across different agent-specific metrics.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{diagrams/agent_performance_radar.png}
+\caption{Individual Agent Performance Metrics}
+\label{fig:agent_performance}
+\end{figure}
 
 \subsubsection{Planner Agent Effectiveness}
 
