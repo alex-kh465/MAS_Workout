@@ -1,0 +1,106 @@
+@startuml Agent_Coordination_Workflow
+!theme plain
+skinparam backgroundColor white
+skinparam sequence {
+    ArrowColor black
+    ActorBorderColor black
+    LifeLineBorderColor black
+    ParticipantBorderColor black
+    
+    ParticipantBackgroundColor #e1f5fe
+    ActorBackgroundColor #fff3e0
+}
+
+title Multi-Agent Workout System - Coordination Workflow
+
+actor User as U
+participant "Streamlit UI" as UI
+participant "Planner Agent" as PA
+participant "LangGraph State" as LG
+participant "Research Agent" as RA
+participant "Tools" as T
+participant "Writer Agent" as WA
+participant "Evaluation" as E
+
+== Query Processing Phase ==
+
+U -> UI: Submit fitness query
+activate UI
+UI -> PA: Forward query with context
+activate PA
+
+note over PA: Analyze query complexity\nIdentify required expertise\nCreate execution plan
+
+PA -> LG: Store plan and context
+activate LG
+PA -> RA: Execute research phase
+activate RA
+
+== Research and Tool Coordination Phase ==
+
+note over RA: Evaluate plan requirements\nSelect appropriate tools\nCoordinate information gathering
+
+par Tool Coordination
+    RA -> T: Fitness Research Tool
+    activate T
+    T -> RA: Exercise data & guidelines
+    deactivate T
+and
+    RA -> T: Nutritional Calculator  
+    activate T
+    T -> RA: Nutritional metrics
+    deactivate T
+and
+    RA -> T: Web Search Tool
+    activate T
+    T -> RA: Current best practices
+    deactivate T
+end
+
+note over RA: Synthesize information\nValidate data quality\nPrepare research findings
+
+RA -> LG: Update state with findings
+RA -> WA: Provide research data
+activate WA
+
+== Response Generation Phase ==
+
+note over WA: Organize content structure\nEnsure actionability\nAdapt to user needs
+
+WA -> LG: Access full context
+WA -> UI: Generate comprehensive response
+
+== Evaluation and Feedback Phase ==
+
+par Evaluation Processing
+    UI -> E: Evaluate response quality
+    activate E
+    PA -> E: Provide planning metrics
+    RA -> E: Provide coordination metrics  
+    WA -> E: Provide generation metrics
+    E -> UI: Return evaluation results
+    deactivate E
+end
+
+UI -> U: Display response + metrics
+deactivate WA
+deactivate RA
+deactivate PA
+deactivate LG
+deactivate UI
+
+== Error Handling (Alternative Flow) ==
+
+note over LG: Error Recovery Protocol
+alt Tool Failure
+    RA -> RA: Fallback to alternative tools
+    RA -> LG: Log error and recovery
+else Information Insufficient  
+    RA -> RA: Request additional data
+    RA -> T: Retry with refined queries
+else Generation Issues
+    WA -> WA: Apply quality assurance
+    WA -> LG: Request context clarification
+end
+
+@enduml

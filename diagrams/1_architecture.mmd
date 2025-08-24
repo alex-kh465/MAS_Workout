@@ -1,0 +1,87 @@
+```mermaid
+graph TB
+    %% User Interface Layer
+    User[👤 User] 
+    UI[🖥️ Streamlit Interface<br/>- Query Input<br/>- Response Display<br/>- Evaluation Dashboard]
+    
+    %% Multi-Agent System Core
+    subgraph "Multi-Agent System (LangGraph)"
+        direction TB
+        
+        %% Agents
+        subgraph "Agent Layer"
+            PA[🧠 Planner Agent<br/>- Query Analysis<br/>- Workflow Planning<br/>- Task Decomposition]
+            RA[🔍 Research Agent<br/>- Tool Coordination<br/>- Information Synthesis<br/>- Data Validation]
+            WA[✍️ Writer Agent<br/>- Content Organization<br/>- Response Generation<br/>- User Adaptation]
+        end
+        
+        %% State Management
+        SM[📊 LangGraph State Management<br/>- Agent Coordination<br/>- Memory Buffers<br/>- Workflow Orchestration]
+        
+        %% Memory System
+        MS[💾 Memory Management<br/>- Per-Agent Memory<br/>- Shared Context<br/>- Session Persistence]
+    end
+    
+    %% External Tools
+    subgraph "External Tools & APIs"
+        FRT[🏋️ Fitness Research Tool<br/>- Exercise Database<br/>- Training Principles<br/>- Safety Guidelines]
+        NC[🥗 Nutritional Calculator<br/>- Calorie Calculations<br/>- Macro Nutrients<br/>- Meal Planning]
+        WS[🌐 Web Search Tool<br/>- Current Research<br/>- Best Practices<br/>- Trend Analysis]
+    end
+    
+    %% LLM Backend
+    LLM[⚡ Groq API<br/>Mixtral-8x7b-32768<br/>- Fast Inference<br/>- Specialized Models]
+    
+    %% Evaluation System
+    ES[📈 Evaluation Framework<br/>- Quality Metrics<br/>- Coordination Analysis<br/>- Performance Monitoring]
+    
+    %% Data Flow Connections
+    User --> UI
+    UI --> PA
+    PA --> SM
+    SM --> PA
+    PA --> RA
+    RA --> SM
+    SM --> RA
+    RA --> WA
+    WA --> SM
+    SM --> WA
+    WA --> UI
+    UI --> User
+    
+    %% Tool Connections
+    RA --> FRT
+    RA --> NC
+    RA --> WS
+    FRT --> RA
+    NC --> RA
+    WS --> RA
+    
+    %% LLM Connections
+    PA -.-> LLM
+    RA -.-> LLM
+    WA -.-> LLM
+    
+    %% Memory Connections
+    SM --> MS
+    MS --> SM
+    
+    %% Evaluation Connections
+    UI --> ES
+    PA --> ES
+    RA --> ES
+    WA --> ES
+    
+    %% Styling
+    classDef agentClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef toolClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef systemClass fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    classDef llmClass fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
+    classDef evalClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    
+    class PA,RA,WA agentClass
+    class FRT,NC,WS toolClass
+    class UI,SM,MS systemClass
+    class LLM llmClass
+    class ES evalClass
+```

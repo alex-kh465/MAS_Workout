@@ -1,0 +1,85 @@
+```mermaid
+graph TB
+    %% Input Layer
+    subgraph "Input Layer"
+        TD[📋 Test Dataset<br/>10 Standardized Queries<br/>- Beginner planning<br/>- Nutrition guidance<br/>- Exercise techniques<br/>- HIIT routines<br/>- Performance improvement<br/>- Home workouts<br/>- Recovery & injury<br/>- Comprehensive planning<br/>- Special populations<br/>- Motivation & psychology]
+    end
+    
+    %% Processing Layer - Parallel Systems
+    subgraph "Processing Layer"
+        direction LR
+        
+        subgraph "Multi-Agent System"
+            MAS[🤝 Multi-Agent Processor<br/>- Planner Agent<br/>- Research Agent<br/>- Writer Agent<br/>- Tool Coordination]
+        end
+        
+        subgraph "Baseline System"
+            BAS[🔄 Single-Agent Processor<br/>- Unified prompt<br/>- Direct tool access<br/>- Single-stage generation]
+        end
+    end
+    
+    %% Evaluation Components
+    subgraph "Evaluation Components"
+        direction TB
+        
+        RQE[📊 Response Quality Evaluator<br/>- Readability Analysis<br/>- Completeness Assessment<br/>- Relevance Scoring<br/>- Actionability Metrics]
+        
+        ACA[🔗 Agent Coordination Analyzer<br/>- Participation Tracking<br/>- Information Flow Analysis<br/>- Tool Usage Effectiveness<br/>- Workflow Efficiency]
+        
+        PM[⚡ Performance Monitor<br/>- Response Time Tracking<br/>- Memory Usage Analysis<br/>- Success Rate Calculation<br/>- Error Pattern Detection]
+    end
+    
+    %% Analysis Layer
+    subgraph "Analysis Layer"
+        direction LR
+        
+        CA[📈 Comparative Analyzer<br/>- Statistical Comparison<br/>- Improvement Calculation<br/>- Significance Testing]
+        
+        VG[📊 Visualization Generator<br/>- Charts & Graphs<br/>- Performance Dashboards<br/>- Trend Analysis]
+    end
+    
+    %% Output Layer
+    subgraph "Output Layer"
+        direction TB
+        
+        JR[📄 JSON Reports<br/>- Raw metrics data<br/>- System configurations<br/>- Detailed timestamps]
+        
+        MR[📝 Markdown Reports<br/>- Executive summary<br/>- Detailed analysis<br/>- Recommendations]
+        
+        SD[🖥️ Streamlit Dashboard<br/>- Live metrics display<br/>- Interactive charts<br/>- Export controls]
+    end
+    
+    %% Data Flow
+    TD --> MAS
+    TD --> BAS
+    
+    MAS --> RQE
+    MAS --> ACA
+    MAS --> PM
+    
+    BAS --> RQE
+    BAS --> PM
+    
+    RQE --> CA
+    ACA --> CA
+    PM --> CA
+    
+    CA --> VG
+    VG --> SD
+    
+    CA --> JR
+    CA --> MR
+    
+    %% Styling
+    classDef inputClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef processClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef evalClass fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    classDef analysisClass fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
+    classDef outputClass fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    
+    class TD inputClass
+    class MAS,BAS processClass
+    class RQE,ACA,PM evalClass
+    class CA,VG analysisClass
+    class JR,MR,SD outputClass
+```

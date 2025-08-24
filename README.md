@@ -121,11 +121,21 @@ The application will be available at: `http://localhost:8501`
 - **Expandable steps**: View detailed agent outputs
 - **Conversation history**: Track previous queries and responses
 - **System controls**: Reset and monitor system status
+- **Evaluation metrics**: Real-time quality assessment of responses
 
 ### Memory Management
 - **Per-agent memory**: Individual conversation buffers
 - **Shared state**: Global context and task coordination
 - **Session persistence**: Maintain context across interactions
+
+### 📊 Comprehensive Evaluation Framework
+- **Response Quality Metrics**: Readability, completeness, relevance, actionability
+- **Agent Coordination Analysis**: Workflow efficiency, tool usage effectiveness
+- **Performance Benchmarking**: Response time, memory usage, success rates
+- **Baseline Comparison**: Multi-agent vs single-agent system comparison
+- **Automated Testing**: Standardized test dataset with 10 representative queries
+- **Real-time Evaluation**: Quality scores displayed with each response
+- **Comprehensive Reports**: JSON and Markdown evaluation reports
 
 ## 📁 Project Structure
 
@@ -243,6 +253,64 @@ The Streamlit UI provides real-time monitoring:
 - **Memory Usage**: Current task status and agent outputs  
 - **Conversation History**: Full history with timestamps
 - **Agent Performance**: Processing time and output length
+- **Quality Metrics**: Real-time evaluation scores for each response
+
+## 🔬 Evaluation Framework
+
+### Comprehensive Evaluation System
+The system includes a complete evaluation framework for academic assessment and performance analysis:
+
+#### Automated Evaluation
+```bash
+# Run quick evaluation (5 test queries)
+python run_evaluation.py
+
+# Run comprehensive evaluation (10 test queries)
+python run_evaluation.py --type full
+
+# Save reports to specific directory
+python run_evaluation.py --type full --output ./evaluation_reports
+```
+
+#### Evaluation Dashboard
+```bash
+# Launch evaluation dashboard
+streamlit run evaluation_dashboard.py
+```
+
+#### Key Evaluation Metrics
+
+**Response Quality Metrics:**
+- **Readability Score**: Sentence structure and clarity assessment
+- **Completeness Score**: Coverage of query requirements and domain knowledge
+- **Relevance Score**: Alignment between query and response content
+- **Actionability Score**: Presence of specific, executable advice
+
+**Agent Coordination Metrics:**
+- **Coordination Score**: Effectiveness of inter-agent communication
+- **Workflow Efficiency**: Timeliness and organization of execution
+- **Tool Usage Effectiveness**: Strategic use of available research tools
+
+**Performance Metrics:**
+- **Response Time**: Total system processing time
+- **Memory Usage**: Efficiency of state management
+- **Success Rate**: Reliability of query processing
+
+#### Baseline Comparison
+The evaluation includes comparison against a single-agent baseline to demonstrate multi-agent benefits:
+
+- **Single-Agent Baseline**: Same LLM and tools but no agent coordination
+- **Comparative Analysis**: Statistical comparison across all metrics
+- **Improvement Quantification**: Percentage improvements in key areas
+- **Qualitative Assessment**: Analysis of coordination benefits
+
+#### Academic Report Generation
+Automatically generates comprehensive academic reports:
+
+- **JSON Reports**: Complete evaluation data in machine-readable format
+- **Markdown Reports**: Human-readable analysis with tables and visualizations
+- **Statistical Analysis**: Detailed performance comparisons and recommendations
+- **Academic Format**: Structured for academic submission and peer review
 
 ## 🤝 Contributing
 

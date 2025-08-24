@@ -1,0 +1,159 @@
+digraph TechnicalArchitecture {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=rounded];
+    
+    // Define color scheme
+    node [fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=8];
+    
+    // Title
+    label="Multi-Agent Workout System - Technical Implementation Architecture";
+    labelloc="t";
+    fontsize=14;
+    fontname="Arial Bold";
+    
+    // Frontend Layer
+    subgraph cluster_frontend {
+        label="Frontend Layer";
+        style=filled;
+        fillcolor="#e3f2fd";
+        
+        streamlit_ui [label="Streamlit UI\n• Query Interface\n• Response Display\n• Dashboard Controls", 
+                     fillcolor="#bbdefb", style=filled];
+        
+        user_components [label="User Components\n• Input Forms\n• Progress Indicators\n• Export Controls", 
+                        fillcolor="#bbdefb", style=filled];
+        
+        eval_display [label="Evaluation Display\n• Live Metrics\n• Charts & Graphs\n• Performance Tracking", 
+                     fillcolor="#bbdefb", style=filled];
+    }
+    
+    // Application Layer
+    subgraph cluster_application {
+        label="Application Layer";
+        style=filled;
+        fillcolor="#e8f5e8";
+        
+        subgraph cluster_agents {
+            label="Agent System";
+            style=filled;
+            fillcolor="#c8e6c8";
+            
+            planner [label="Planner Agent\n• Query Analysis\n• Task Decomposition\n• Workflow Planning", 
+                    fillcolor="#a5d6a7", style=filled];
+            
+            research [label="Research Agent\n• Tool Coordination\n• Information Gathering\n• Data Synthesis", 
+                     fillcolor="#a5d6a7", style=filled];
+            
+            writer [label="Writer Agent\n• Content Organization\n• Response Generation\n• User Adaptation", 
+                   fillcolor="#a5d6a7", style=filled];
+        }
+        
+        langgraph [label="LangGraph Orchestration\n• Agent Coordination\n• State Management\n• Workflow Control", 
+                  fillcolor="#81c784", style=filled];
+        
+        memory_mgmt [label="Memory Management\n• Agent Buffers\n• Shared Context\n• Session Persistence", 
+                    fillcolor="#81c784", style=filled];
+        
+        eval_framework [label="Evaluation Framework\n• Quality Metrics\n• Coordination Analysis\n• Performance Monitoring", 
+                       fillcolor="#81c784", style=filled];
+    }
+    
+    // Integration Layer
+    subgraph cluster_integration {
+        label="Integration Layer";
+        style=filled;
+        fillcolor="#fff3e0";
+        
+        langchain_tools [label="LangChain Tools\n• Tool Interfaces\n• Chain Management\n• Context Handling", 
+                        fillcolor="#ffcc02", style=filled];
+        
+        api_connectors [label="API Connectors\n• HTTP Clients\n• Rate Limiting\n• Error Handling", 
+                       fillcolor="#ffcc02", style=filled];
+        
+        state_mgmt [label="State Management\n• Data Persistence\n• Configuration\n• Logging System", 
+                   fillcolor="#ffcc02", style=filled];
+    }
+    
+    // Backend Services
+    subgraph cluster_backend {
+        label="Backend Services";
+        style=filled;
+        fillcolor="#f3e5f5";
+        
+        groq_api [label="Groq API\nMixtral-8x7b-32768\n• Fast Inference\n• Model Selection", 
+                 fillcolor="#ce93d8", style=filled];
+        
+        subgraph cluster_tools {
+            label="Specialized Tools";
+            style=filled;
+            fillcolor="#d1c4e9";
+            
+            fitness_tool [label="Fitness Research\n• Exercise Database\n• Training Principles", 
+                         fillcolor="#b39ddb", style=filled];
+            
+            nutrition_tool [label="Nutritional Calculator\n• Calorie Calculations\n• Macro Planning", 
+                           fillcolor="#b39ddb", style=filled];
+            
+            web_search [label="Web Search\n• Current Research\n• Best Practices", 
+                       fillcolor="#b39ddb", style=filled];
+        }
+        
+        data_storage [label="Data Storage\n• Configuration\n• Evaluation Results\n• User Sessions", 
+                     fillcolor="#ce93d8", style=filled];
+    }
+    
+    // External Dependencies
+    subgraph cluster_external {
+        label="External Dependencies";
+        style=filled;
+        fillcolor="#ffebee";
+        
+        python_runtime [label="Python 3.11+\n• asyncio Support\n• Package Management", 
+                       fillcolor="#ffcdd2", style=filled];
+        
+        libraries [label="Key Libraries\n• streamlit\n• langgraph\n• langchain\n• groq", 
+                  fillcolor="#ffcdd2", style=filled];
+    }
+    
+    // Connections between layers
+    
+    // Frontend to Application
+    streamlit_ui -> langgraph [label="User Queries"];
+    langgraph -> streamlit_ui [label="Responses"];
+    eval_display -> eval_framework [label="Metrics Request"];
+    eval_framework -> eval_display [label="Live Data"];
+    
+    // Agent interactions
+    langgraph -> planner [label="Initiate"];
+    planner -> research [label="Plan"];
+    research -> writer [label="Findings"];
+    
+    // Application to Integration
+    langgraph -> langchain_tools [label="Tool Requests"];
+    langchain_tools -> api_connectors [label="API Calls"];
+    memory_mgmt -> state_mgmt [label="Persistence"];
+    
+    // Integration to Backend
+    api_connectors -> groq_api [label="LLM Requests"];
+    langchain_tools -> fitness_tool [label="Research"];
+    langchain_tools -> nutrition_tool [label="Calculations"];
+    langchain_tools -> web_search [label="Search"];
+    
+    // Backend responses
+    groq_api -> api_connectors [label="Model Output"];
+    fitness_tool -> langchain_tools [label="Exercise Data"];
+    nutrition_tool -> langchain_tools [label="Nutrition Data"];
+    web_search -> langchain_tools [label="Web Results"];
+    
+    // External dependencies
+    python_runtime -> streamlit_ui [style=dashed];
+    libraries -> langgraph [style=dashed];
+    libraries -> langchain_tools [style=dashed];
+    
+    // Evaluation flows
+    planner -> eval_framework [label="Planning Metrics", style=dashed, color=red];
+    research -> eval_framework [label="Coordination Metrics", style=dashed, color=red];
+    writer -> eval_framework [label="Quality Metrics", style=dashed, color=red];
+}

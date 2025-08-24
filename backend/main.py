@@ -4,6 +4,7 @@ Provides a clean interface for the Streamlit frontend.
 """
 
 import os
+import time
 from typing import Dict, List, Any, Optional
 import traceback
 from datetime import datetime
@@ -12,6 +13,7 @@ from .graph import run_multi_agent_workflow, get_workflow_status, reset_workflow
 from .memory import get_memory_manager
 from .agents import get_all_agents
 from .tools import get_tools
+from .evaluation import get_system_evaluator
 
 
 class WorkoutAgentSystem:
@@ -26,16 +28,19 @@ class WorkoutAgentSystem:
         self.tools = get_tools()
         self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    def process_query(self, query: str) -> Dict[str, Any]:
+    def process_query(self, query: str, enable_evaluation: bool = True) -> Dict[str, Any]:
         """
         Process a user query through the multi-agent workflow.
         
         Args:
             query (str): User's query or request
+            enable_evaluation (bool): Whether to run evaluation metrics
             
         Returns:
             Dict[str, Any]: Complete workflow results and agent outputs
         """
+        start_time = time.time()
+        
         try:
             print(f"\n{'='*60}")
             print(f"Processing query: {query}")
@@ -44,6 +49,9 @@ class WorkoutAgentSystem:
             
             # Run the workflow
             workflow_result = run_multi_agent_workflow(query, use_simple=True)
+            
+            end_time = time.time()
+            total_response_time = end_time - start_time
             
             # Get all agent outputs from memory
             all_outputs = self.memory_manager.get_all_outputs()
@@ -57,8 +65,49 @@ class WorkoutAgentSystem:
                 "agent_steps": self._format_agent_steps(all_outputs),
                 "workflow_result": workflow_result,
                 "timestamp": datetime.now().isoformat(),
+                "response_time": total_response_time,
                 "error": workflow_result.get("error", None)
             }
+            
+            # Add evaluation metrics if enabled
+            if enable_evaluation and workflow_result.get("success", True):
+                try:
+                    system_evaluator = get_system_evaluator()
+                    
+                    # Simulate agent response times (proportional to total time)
+                    agent_times = {
+                        'planner': total_response_time * 0.2,
+                        'research': total_response_time * 0.5,
+                        'writer': total_response_time * 0.3
+                    }
+                    
+                    evaluation_result = system_evaluator.evaluate_system_response(
+                        query=query,
+                        final_response=workflow_result.get("final_output", ""),
+                        agent_outputs=all_outputs,
+                        agent_response_times=agent_times,
+                        total_response_time=total_response_time,
+                        memory_manager=self.memory_manager
+                    )
+                    
+                    response['evaluation_metrics'] = {
+                        'final_score': evaluation_result.final_score,
+                        'quality_score': evaluation_result.overall_quality_score,
+                        'efficiency_score': evaluation_result.system_efficiency_score,
+                        'response_length': evaluation_result.response_length,
+                        'readability_score': evaluation_result.readability_score,
+                        'completeness_score': evaluation_result.completeness_score,
+                        'relevance_score': evaluation_result.relevance_score,
+                        'actionability_score': evaluation_result.actionability_score,
+                        'coordination_score': evaluation_result.agent_coordination_score,
+                        'tool_usage_score': evaluation_result.tool_usage_effectiveness
+                    }
+                    
+                    print(f"Evaluation Score: {evaluation_result.final_score:.3f}")
+                    
+                except Exception as eval_error:
+                    print(f"Evaluation error: {str(eval_error)}")
+                    response['evaluation_metrics'] = {'error': str(eval_error)}
             
             print(f"\nSUCCESS: Query processed successfully!")
             print(f"Final answer length: {len(response['final_answer'])} characters")
@@ -211,17 +260,18 @@ def get_workout_system() -> WorkoutAgentSystem:
     return workout_system
 
 
-def process_user_query(query: str) -> Dict[str, Any]:
+def process_user_query(query: str, enable_evaluation: bool = True) -> Dict[str, Any]:
     """
     Process a user query through the system.
     
     Args:
         query (str): User's query
+        enable_evaluation (bool): Whether to run evaluation metrics
         
     Returns:
         Dict[str, Any]: Complete response
     """
-    return workout_system.process_query(query)
+    return workout_system.process_query(query, enable_evaluation)
 
 
 def reset_system():
